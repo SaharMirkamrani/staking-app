@@ -1,4 +1,4 @@
-"use strict";
+// deploy/01_deploy_staker.js
 
 const { ethers } = require("hardhat");
 const { toWei } = require("../utils/format");
@@ -10,37 +10,22 @@ async function main() {
   const { chainId } = await ethers.provider.getNetwork();
   const [owner] = await ethers.getSigners();
 
-  const CONTRACT_NAME = "SimpleNFT";
+  const CONTRACT_NAME = "Staker";
 
-  const args = [];
+  const exampleExternalContract = await ethers.getContractFactory(
+    "ExampleExternalContract"
+  );
+  const externalContract = await exampleExternalContract.deploy();
+  externalContract.deployed();
+  console.log(externalContract.address);
+
+  const args = [externalContract.address];
   const contract = await deployContract({
     signer: owner,
     contractName: CONTRACT_NAME,
     args: args,
   });
 
-  /*
-  // If you want to send some ETH to a contract on deploy (make your constructor payable!)
-  const contract = await deployContract({
-    signer: owner,
-    contractName: CONTRACT_NAME,
-    args: args,
-    overrides: {
-      value: toWei("1"), // send 1 ether
-    },
-  });
-  */
-
-  /*
-  // Mint 100 tokens for user
-  const [_, user] = await ethers.getSigners();
-  const tx = await contract.connect(user).mint(user.address, toWei("100"));
-  const extraGasInfo = await getExtraGasInfo(tx);
-  console.log("Minting: ", extraGasInfo);
-  */
-
-  // You don't want to verify on localhost
-  // uncomment below code to programmatically verify contract
   try {
     if (chainId != 31337 && chainId != 1337) {
       const contractPath = `contracts/${CONTRACT_NAME}.sol:${CONTRACT_NAME}`;

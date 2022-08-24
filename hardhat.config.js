@@ -54,8 +54,8 @@ function getChainConfig(network) {
 }
 
 const RINKEBY_RPC_URL =
-  process.env.ALCHEMY_API_KEY_UR ||
-  "https://eth-rinkeby.alchemyapi.io/v2/z2S5T71I17T9C0ksKGpXagl7DCseFrXk";
+  process.env.INFURA_API_KEY_UR ||
+  "https://rinkeby.infura.io/v3/c29d44633dc64c3e80cbd2163a3b0753";
 
 const PRIVATE_KEY_2 = process.env.PRIVATE_KEY_2 || "0x";
 const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1 || "0x";

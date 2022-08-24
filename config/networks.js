@@ -3,45 +3,34 @@ const { config: dotenvConfig } = require("dotenv");
 
 dotenvConfig({ path: resolve(__dirname, "../.env") });
 
-const ALCHEMY_KEY = process.env.ALCHEMY_API_KEY_URL;
-if (typeof ALCHEMY_KEY === "undefined") {
-  throw new Error(`ALCHEMY_API_KEY_URL must be a defined environment variable`);
+const INFURA_KEY = process.env.INFURA_API_KEY_URL;
+if (typeof INFURA_KEY === "undefined") {
+  throw new Error(`INFURA_API_KEY_URL must be a defined environment variable`);
 }
 
-const alchemyUrl = (network) =>
-  `https://eth-${network}.alchemyapi.io/v2/${ALCHEMY_KEY}`;
+const infuraUrl = (network) => `https://${network}.infura.io/v3/${INFURA_KEY}`;
 
-/**
- * All supported network names
- * To use a network in your command use the value of each key
- *
- * e.g.
- *
- * $ yarn deploy:network mainnet
- *
- * $ npx hardhat run scripts/deploy.ts --network polygon-mainnet
- */
 const networks = {
   // ETHEREUM
   mainnet: {
     chainId: 1,
-    url: alchemyUrl("mainnet"),
+    url: infuraUrl("mainnet"),
   },
   kovan: {
     chainId: 42,
-    url: alchemyUrl("kovan"),
+    url: infuraUrl("kovan"),
   },
   goerli: {
     chainId: 5,
-    url: alchemyUrl("goerli"),
+    url: infuraUrl("goerli"),
   },
   rinkeby: {
     chainId: 4,
-    url: alchemyUrl("rinkeby"),
+    url: infuraUrl("rinkeby"),
   },
   ropsten: {
     chainId: 3,
-    url: alchemyUrl("ropsten"),
+    url: infuraUrl("ropsten"),
   },
   sepolia: {
     chainId: 11155111,
@@ -61,31 +50,31 @@ const networks = {
   // MATIC/POLYGON
   "polygon-mainnet": {
     chainId: 137,
-    url: alchemyUrl("polygon-mainnet"),
+    url: infuraUrl("polygon-mainnet"),
   },
   "polygon-mumbai": {
     chainId: 80001,
-    url: alchemyUrl("polygon-mumbai"),
+    url: infuraUrl("polygon-mumbai"),
   },
 
   // OPTIMISM
   "optimism-mainnet": {
     chainId: 10,
-    url: alchemyUrl("optimism-mainnet"),
+    url: infuraUrl("optimism-mainnet"),
   },
   "optimism-kovan": {
     chainId: 69,
-    url: alchemyUrl("optimism-kovan"),
+    url: infuraUrl("optimism-kovan"),
   },
 
   // ARBITRUM
   "arbitrum-mainnet": {
     chainId: 42161,
-    url: alchemyUrl("arbitrum-mainnet"),
+    url: infuraUrl("arbitrum-mainnet"),
   },
   "arbitrum-rinkeby": {
     chainId: 421611,
-    url: alchemyUrl("arbitrum-rinkeby"),
+    url: infuraUrl("arbitrum-rinkeby"),
   },
 
   // AVALANCHE
@@ -109,9 +98,9 @@ const networks = {
   },
 };
 
-const developmentChains = ["hardhat", "localhost"]
+const developmentChains = ["hardhat", "localhost"];
 
 module.exports = {
   networks,
-  developmentChains
+  developmentChains,
 };
